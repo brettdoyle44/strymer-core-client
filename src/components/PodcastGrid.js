@@ -5,12 +5,31 @@ import styled from 'styled-components';
 import { API, Auth } from 'aws-amplify';
 
 const Layout = styled.div`
-  grid-area: content;
+  padding: 2em;
+`;
+
+const Search = styled.input`
+  width: 100%;
+  border-radius: 25px;
+  border: 2px solid #d1d8e0;
+  padding: 0.5em 1.5em;
+  background-color: #fff;
+  &:focus {
+    outline: none;
+    border: 2px solid #ef1860;
+  }
+`;
+
+const FeatureHeader = styled.h1`
+  font-weight: 900;
+  color: #ef1860;
+  text-align: left;
+  padding: 0.5em 0px 0.75em 0.25em;
 `;
 
 const InnerLayout = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   grid-gap: 1em;
 `;
 
@@ -28,6 +47,7 @@ const TitleBlock = styled.div`
 
 const Title = styled.h4`
   text-align: left;
+  font-weight: 900;
   margin-block-start: 0;
   margin-block-end: 0;
 `;
@@ -35,6 +55,7 @@ const Title = styled.h4`
 const Author = styled.p`
   margin-block-start: 0;
   margin-block-end: 0;
+  text-align: left;
   color: #3e4e6c;
 `;
 
@@ -78,6 +99,8 @@ export default function PodcastGrid(props) {
   return (
     <React.Fragment>
       <Layout>
+        <Search placeholder="Search for podcasts here..." />
+        <FeatureHeader>Featured</FeatureHeader>
         <InnerLayout>
           {podcasts.map(podcast => (
             <Card key={podcast.podcastId}>

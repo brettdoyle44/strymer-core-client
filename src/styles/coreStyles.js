@@ -14,22 +14,30 @@ export const GlobalStyle = createGlobalStyle`
 export const Button = styled.button`
   display: inline-block;
   border-radius: 50px;
-  padding: 0.75rem 1rem;
+  padding: 0.70rem 1rem;
   margin: 0.5rem 1rem;
   width: 10rem;
   font-weight: 400;
-  border: none
   background: transparent;
   color: white;
+  &:hover {
+    opacity: 0.75;
+  }
+  &:focus {
+    outline: none;
+    border: 2px solid #ef1860;
+  }
   ${props =>
     props.primary &&
     css`
-      background: #313e55;
+      border: 2px solid #01052d;
+      background: #01052d;
       color: #fff;
     `}
     ${props =>
       props.pink &&
       css`
+        border: 2px solid #ec1966;
         background: #ec1966;
         color: #fff;
       `}
