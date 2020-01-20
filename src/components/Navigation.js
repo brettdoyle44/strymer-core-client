@@ -50,7 +50,7 @@ const PodcastHeader = styled.h4`
 const TheLink = styled.div`
   padding: 0.35em 0 0.35em 0.75em;
   ${props =>
-    props.active &&
+    props.activestyle &&
     css`
       background: #ef1860;
       border-radius: 25px;
@@ -60,10 +60,10 @@ const TheLink = styled.div`
 `;
 
 const GenLink = styled(Link)`
-  color: ${props => (props.active ? '#fff' : '#01052d')};
+  color: ${props => (props.activestyle ? '#fff' : '#01052d')};
   &:hover {
     text-decoration: none;
-    color: ${props => (props.active ? '#fff' : '#ef1860')};
+    color: ${props => (props.activestyle ? '#fff' : '#ef1860')};
   }
   &:focus {
     color: #fff;
@@ -71,24 +71,25 @@ const GenLink = styled(Link)`
   }
 `;
 
-const Navigation = () => {
+const Navigation = props => {
   const [active, setActive] = useState('home');
-  const [isAuthenticated, setAuthentication] = useState(null);
+  function handleLogout() {
+    props.userHasAuthenticated(false);
+  }
   return (
     <Nav>
       <Logo>
         <StrymerLogo src={logo} alt="Strymer logo" />
       </Logo>
-
       <NavLinks>
         <PodcastHeader>Podcast</PodcastHeader>
         <TheLink
           onClick={() => {
             setActive('home');
           }}
-          active={active === 'home'}
+          activestyle={active === 'home'}
         >
-          <GenLink active={active === 'home'}>
+          <GenLink to="/" activestyle={active === 'home'}>
             <TiHome
               style={{
                 fontSize: '1.25em',
@@ -103,9 +104,9 @@ const Navigation = () => {
           onClick={() => {
             setActive('discover');
           }}
-          active={active === 'discover'}
+          activestyle={active === 'discover'}
         >
-          <GenLink active={active === 'discover'}>
+          <GenLink to="/" activestyle={active === 'discover'}>
             <TiCompass
               style={{
                 fontSize: '1.25em',
@@ -120,9 +121,9 @@ const Navigation = () => {
           onClick={() => {
             setActive('latest');
           }}
-          active={active === 'latest'}
+          activestyle={active === 'latest'}
         >
-          <GenLink active={active === 'latest'}>
+          <GenLink to="/" activestyle={active === 'latest'}>
             <TiAdjustBrightness
               style={{
                 fontSize: '1.25em',
@@ -135,7 +136,7 @@ const Navigation = () => {
         </TheLink>
       </NavLinks>
 
-      {isAuthenticated ? (
+      {props.isAuthenticated ? (
         <>
           <NavLinks>
             <PodcastHeader>Profile</PodcastHeader>
@@ -143,9 +144,9 @@ const Navigation = () => {
               onClick={() => {
                 setActive('favorites');
               }}
-              active={active === 'favorites'}
+              activestyle={active === 'favorites'}
             >
-              <GenLink active={active === 'favorites'}>
+              <GenLink to="/" activestyle={active === 'favorites'}>
                 <TiHeart
                   style={{
                     fontSize: '1.25em',
@@ -160,9 +161,9 @@ const Navigation = () => {
               onClick={() => {
                 setActive('settings');
               }}
-              active={active === 'settings'}
+              activestyle={active === 'settings'}
             >
-              <GenLink active={active === 'settings'}>
+              <GenLink to="/" activestyle={active === 'settings'}>
                 <TiCog
                   style={{
                     fontSize: '1.25em',
@@ -175,7 +176,7 @@ const Navigation = () => {
             </TheLink>
           </NavLinks>
           <AuthButtons>
-            <Button primary large>
+            <Button primary large onClick={handleLogout}>
               Log Out
             </Button>
           </AuthButtons>
