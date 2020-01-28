@@ -183,7 +183,10 @@ function App(props) {
                     }}
                     activestyle={active === 'favorites'}
                   >
-                    <GenLink to="/" activestyle={active === 'favorites'}>
+                    <GenLink
+                      to="/favorites"
+                      activestyle={active === 'favorites'}
+                    >
                       <TiHeart
                         style={{
                           fontSize: '1.25em',

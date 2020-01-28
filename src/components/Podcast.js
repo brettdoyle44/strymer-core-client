@@ -16,11 +16,13 @@ import {
   EpTitle,
   PlayWrap
 } from '../styles/podcast';
+import { Button } from '../styles/coreStyles';
 import moment from 'moment';
 import { FaPlayCircle } from 'react-icons/fa';
 
 export default function Podcast(props) {
   const [podcast, setPodcast] = useState({});
+  const [podcastId, setPodcastId] = useState('');
 
   useEffect(() => {
     function loadEvent() {
@@ -30,6 +32,7 @@ export default function Podcast(props) {
       try {
         await Auth.currentCredentials();
         const podcast = await loadEvent();
+        setPodcastId(props.match.params.id);
         setPodcast(podcast);
       } catch (e) {
         alert(e);
@@ -38,6 +41,23 @@ export default function Podcast(props) {
 
     onLoad();
   }, [props.match.params.id]);
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    try {
+      await addFavorite({ podcastId });
+      // props.history.push('/');
+    } catch (e) {
+      alert(e);
+    }
+  }
+
+  function addFavorite(event) {
+    return API.post('favorites', '/favorites', {
+      body: event
+    });
+  }
 
   return (
     <div>
@@ -49,6 +69,11 @@ export default function Podcast(props) {
               <Header>{podcast.title}</Header>
               <Author>{podcast.author}</Author>
               <TextBlock>{podcast.description}</TextBlock>
+              {props.isAuthenticated && (
+                <Button onClick={handleSubmit} primary>
+                  Add to Favorites
+                </Button>
+              )}
             </PodcastArea>
             <EpisodesSection>
               <EpHeader>Episodes</EpHeader>

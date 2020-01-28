@@ -19,6 +19,11 @@ Amplify.configure({
         name: 'podcasts',
         endpoint: dev.apiGateway.URL,
         region: dev.apiGateway.REGION
+      },
+      {
+        name: 'favorites',
+        endpoint: dev.apiGateway.URL,
+        region: dev.apiGateway.REGION
       }
     ]
   }
