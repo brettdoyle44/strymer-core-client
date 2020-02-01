@@ -28,7 +28,8 @@ export const PodcastArea = styled.div`
     'img'
     'title'
     'author'
-    'bd';
+    'bd'
+    'btn';
   @media (min-width: 40em) {
     grid-column-gap: 20px;
     padding: 1em 5em;
@@ -39,7 +40,8 @@ export const PodcastArea = styled.div`
     grid-template-areas:
       'img title'
       'img author'
-      'img bd';
+      'img bd'
+      'img btn';
   }
 `;
 

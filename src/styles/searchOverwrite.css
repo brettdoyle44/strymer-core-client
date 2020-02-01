@@ -1,0 +1,19 @@
+.ais-SearchBox-input {
+  width: 100%;
+  border-radius: 25px;
+  border: 1px solid #d1d8e0;
+  padding: 0.75em 1.5em;
+  background-color: #fff;
+}
+.ais-SearchBox-input:focus {
+  outline: none;
+  border: 1px solid #ef1860;
+}
+
+.ais-SearchBox-reset {
+  display: none;
+}
+
+.ais-SearchBox-submit {
+  display: none;
+}

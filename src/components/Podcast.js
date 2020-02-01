@@ -70,7 +70,11 @@ export default function Podcast(props) {
               <Author>{podcast.author}</Author>
               <TextBlock>{podcast.description}</TextBlock>
               {props.isAuthenticated && (
-                <Button onClick={handleSubmit} primary>
+                <Button
+                  style={{ gridArea: 'btn', minWidth: '200px' }}
+                  onClick={handleSubmit}
+                  primary
+                >
                   Add to Favorites
                 </Button>
               )}

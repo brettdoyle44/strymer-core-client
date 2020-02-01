@@ -4,7 +4,7 @@ export const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900&display=swap');
   body {
     background-color: #ecf0f3;
-    color: #242E42
+    color: #242E42;
     font-family: 'Roboto', sans-serif;
     text-align: center;
     font-weight: 400;
