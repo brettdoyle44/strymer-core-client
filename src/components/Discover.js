@@ -9,7 +9,8 @@ import {
   Image,
   TitleBlock,
   Title,
-  Author
+  Author,
+  LoadingLayout
 } from '../styles/podcastGrid';
 import { API, Auth } from 'aws-amplify';
 
@@ -17,6 +18,7 @@ import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, SearchBox, connectHits } from 'react-instantsearch-dom';
 import { search } from '../config';
 import '../styles/searchOverwrite.css';
+import Spinner from 'react-spinkit';
 
 import {
   HitsLayout,
@@ -32,6 +34,7 @@ export default function PodcastGrid(props) {
   const [podcasts, setPodcasts] = useState([]);
   // const [isAuthenticated, userHasAuthenticated] = useState(false);
   const [search, setSearch] = useState('');
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     async function onLoad() {
@@ -39,6 +42,7 @@ export default function PodcastGrid(props) {
         await Auth.currentCredentials();
         const podcasts = await loadPodcasts();
         setPodcasts(podcasts);
+        setLoading(true);
       } catch (e) {
         console.error(e);
       }
@@ -72,31 +76,45 @@ export default function PodcastGrid(props) {
 
   return (
     <React.Fragment>
-      <Layout>
-        <InstantSearch indexName="podcast-search" searchClient={searchClient}>
-          <SearchBox onChange={e => setSearch(e.target.value)} />
-          {search.length >= 1 ? <CustomHits /> : <div></div>}
-        </InstantSearch>
-        <FeatureHeader>Featured</FeatureHeader>
-        <InnerLayout>
-          {podcasts.map(podcast => (
-            <Card key={podcast.podcastId}>
-              <ImageWrap>
-                <Link
-                  key={podcast.podcastId}
-                  to={`/podcasts/${podcast.podcastId}`}
-                >
-                  <Image src={podcast.image} alt={podcast.title} />
-                </Link>
-              </ImageWrap>
-              <TitleBlock>
-                <Title>{podcast.title}</Title>
-                <Author>{podcast.author}</Author>
-              </TitleBlock>
-            </Card>
-          ))}
-        </InnerLayout>
-      </Layout>
+      {!isLoading ? (
+        <>
+          <LoadingLayout>
+            <Spinner
+              name="pacman"
+              style={{ fontSize: '15em', color: '#ef1860' }}
+            />
+          </LoadingLayout>
+        </>
+      ) : (
+        <Layout>
+          <InstantSearch
+            indexName="dev_podcast-search"
+            searchClient={searchClient}
+          >
+            <SearchBox onChange={e => setSearch(e.target.value)} />
+            {search.length >= 1 ? <CustomHits /> : <div></div>}
+          </InstantSearch>
+          <FeatureHeader>Browse</FeatureHeader>
+          <InnerLayout>
+            {podcasts.map(podcast => (
+              <Card key={podcast.podcastId}>
+                <ImageWrap>
+                  <Link
+                    key={podcast.podcastId}
+                    to={`/podcasts/${podcast.podcastId}`}
+                  >
+                    <Image src={podcast.image} alt={podcast.title} />
+                  </Link>
+                </ImageWrap>
+                <TitleBlock>
+                  <Title>{podcast.title}</Title>
+                  <Author>{podcast.author}</Author>
+                </TitleBlock>
+              </Card>
+            ))}
+          </InnerLayout>
+        </Layout>
+      )}
     </React.Fragment>
   );
 }

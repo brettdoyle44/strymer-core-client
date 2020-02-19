@@ -1,10 +1,11 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Podcast from './components/Podcast';
-import PodcastGrid from './components/PodcastGrid';
+import Home from './components/Home.js';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Favorites from './components/Favorites';
+import Discover from './components/Discover';
 import App from './App';
 
 import AppliedRoute from './routes/AppliedRoute';
@@ -18,10 +19,11 @@ export default function Routes({ appProps }) {
         component={Podcast}
         appProps={appProps}
       />
+      <AppliedRoute exact path="/" component={Home} appProps={appProps} />
       <AppliedRoute
         exact
-        path="/"
-        component={PodcastGrid}
+        path="/discover"
+        component={Discover}
         appProps={appProps}
       />
       <AppliedRoute

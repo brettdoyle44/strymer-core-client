@@ -34,7 +34,7 @@ export const HitsArea = styled.div`
     'img title'
     'img bd';
   &:hover {
-    background: rgba(0, 0, 0, 0.5);
+    opacity: 0.75;
     cursor: pointer;
   }
 `;

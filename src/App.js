@@ -10,13 +10,7 @@ import { Auth } from 'aws-amplify';
 // Components
 // import Navigation from './components/Navigation';
 import Routes from './Routes';
-import {
-  TiHome,
-  TiCog,
-  TiHeart,
-  TiAdjustBrightness,
-  TiCompass
-} from 'react-icons/ti';
+import { TiHome, TiCog, TiHeart, TiCompass } from 'react-icons/ti';
 
 const Layout = styled.div`
   display: grid;
@@ -29,11 +23,12 @@ const Nav = styled.nav`
   text-align: left;
   flex-direction: column;
   padding: 1em;
+  background-color: #fff;
 `;
 
 const Logo = styled.div`
   max-width: 11em;
-  padding: 1em;
+  padding: 1em 1em 1em 1.5em;
 `;
 
 const StrymerLogo = styled.img`
@@ -43,7 +38,7 @@ const StrymerLogo = styled.img`
 const NavLinks = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1em 1em 1em 0.25em;
+  padding: 1em 1em 1em 1em;
   font-size: 1.15em;
 `;
 const AuthButtons = styled.div`
@@ -51,7 +46,7 @@ const AuthButtons = styled.div`
   position: absolute;
   bottom: 10px;
   flex-direction: column;
-  padding: 1em 0;
+  padding: 1em;
 `;
 
 const PodcastHeader = styled.h4`
@@ -87,7 +82,7 @@ const GenLink = styled(Link)`
 function App(props) {
   const [isAuthenticating, setIsAuthenticating] = useState(true);
   const [isAuthenticated, userHasAuthenticated] = useState(false);
-  const [active, setActive] = useState('');
+  const [active, setActive] = useState('home');
 
   useEffect(() => {
     onLoad();
@@ -143,7 +138,7 @@ function App(props) {
                 }}
                 activestyle={active === 'discover'}
               >
-                <GenLink to="/" activestyle={active === 'discover'}>
+                <GenLink to="/discover" activestyle={active === 'discover'}>
                   <TiCompass
                     style={{
                       fontSize: '1.25em',
@@ -152,23 +147,6 @@ function App(props) {
                     }}
                   />{' '}
                   Discover
-                </GenLink>
-              </TheLink>
-              <TheLink
-                onClick={() => {
-                  setActive('latest');
-                }}
-                activestyle={active === 'latest'}
-              >
-                <GenLink to="/" activestyle={active === 'latest'}>
-                  <TiAdjustBrightness
-                    style={{
-                      fontSize: '1.25em',
-                      position: 'relative',
-                      top: '3.5px'
-                    }}
-                  />{' '}
-                  Latest
                 </GenLink>
               </TheLink>
             </NavLinks>

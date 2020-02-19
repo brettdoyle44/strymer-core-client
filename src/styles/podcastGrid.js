@@ -4,6 +4,12 @@ export const Layout = styled.div`
   padding: 2em;
 `;
 
+export const LoadingLayout = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const Search = styled.input`
   width: 100%;
   border-radius: 25px;
@@ -26,6 +32,12 @@ export const FeatureHeader = styled.h1`
 export const InnerLayout = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-gap: 1em;
+`;
+
+export const FeatureLayout = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 1em;
 `;
 
