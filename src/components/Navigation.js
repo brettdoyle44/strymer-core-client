@@ -1,15 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import { Context } from '../context/store';
 import { Link } from 'react-router-dom';
+import { Auth } from 'aws-amplify';
 import styled, { css } from 'styled-components';
 import logo from '../images/Strymer-Final-Logo.png';
 import { Button } from '../styles/coreStyles';
-import {
-  TiHome,
-  TiCog,
-  TiHeart,
-  TiAdjustBrightness,
-  TiCompass
-} from 'react-icons/ti';
+import { TiHome, TiCog, TiHeart, TiCompass } from 'react-icons/ti';
 
 const Nav = styled.nav`
   display: flex;
@@ -72,10 +68,14 @@ const GenLink = styled(Link)`
 `;
 
 const Navigation = props => {
-  const [active, setActive] = useState('home');
-  function handleLogout() {
-    props.userHasAuthenticated(false);
+  const { store, dispatch } = useContext(Context);
+
+  async function handleLogout() {
+    await Auth.signOut();
+    dispatch({ type: 'USER_LOGOUT' });
+    props.history.push('/login');
   }
+
   return (
     <Nav>
       <Logo>
@@ -85,11 +85,11 @@ const Navigation = props => {
         <PodcastHeader>Podcast</PodcastHeader>
         <TheLink
           onClick={() => {
-            setActive('home');
+            dispatch({ type: 'ACTIVE_NAV', payload: 'home' });
           }}
-          activestyle={active === 'home'}
+          activestyle={store.active === 'home'}
         >
-          <GenLink to="/" activestyle={active === 'home'}>
+          <GenLink to="/" activestyle={store.active === 'home'}>
             <TiHome
               style={{
                 fontSize: '1.25em',
@@ -102,11 +102,11 @@ const Navigation = props => {
         </TheLink>
         <TheLink
           onClick={() => {
-            setActive('discover');
+            dispatch({ type: 'ACTIVE_NAV', payload: 'discover' });
           }}
-          activestyle={active === 'discover'}
+          activestyle={store.active === 'discover'}
         >
-          <GenLink to="/" activestyle={active === 'discover'}>
+          <GenLink to="/discover" activestyle={store.active === 'discover'}>
             <TiCompass
               style={{
                 fontSize: '1.25em',
@@ -117,36 +117,19 @@ const Navigation = props => {
             Discover
           </GenLink>
         </TheLink>
-        <TheLink
-          onClick={() => {
-            setActive('latest');
-          }}
-          activestyle={active === 'latest'}
-        >
-          <GenLink to="/" activestyle={active === 'latest'}>
-            <TiAdjustBrightness
-              style={{
-                fontSize: '1.25em',
-                position: 'relative',
-                top: '3.5px'
-              }}
-            />{' '}
-            Latest
-          </GenLink>
-        </TheLink>
       </NavLinks>
 
-      {props.isAuthenticated ? (
+      {store.hasAuthenticated ? (
         <>
           <NavLinks>
             <PodcastHeader>Profile</PodcastHeader>
             <TheLink
               onClick={() => {
-                setActive('favorites');
+                dispatch({ type: 'ACTIVE_NAV', payload: 'favorites' });
               }}
-              activestyle={active === 'favorites'}
+              activestyle={store.active === 'favorites'}
             >
-              <GenLink to="/" activestyle={active === 'favorites'}>
+              <GenLink to="/" activestyle={store.active === 'favorites'}>
                 <TiHeart
                   style={{
                     fontSize: '1.25em',
@@ -159,11 +142,11 @@ const Navigation = props => {
             </TheLink>
             <TheLink
               onClick={() => {
-                setActive('settings');
+                dispatch({ type: 'ACTIVE_NAV', payload: 'settings' });
               }}
-              activestyle={active === 'settings'}
+              activestyle={store.active === 'settings'}
             >
-              <GenLink to="/" activestyle={active === 'settings'}>
+              <GenLink to="/" activestyle={store.active === 'settings'}>
                 <TiCog
                   style={{
                     fontSize: '1.25em',
@@ -183,12 +166,28 @@ const Navigation = props => {
         </>
       ) : (
         <AuthButtons>
-          <Button primary large>
-            Login
-          </Button>
-          <Button primary large>
-            Sign Up
-          </Button>
+          <Link to="/login">
+            <Button
+              primary
+              large
+              onClick={() => {
+                dispatch({ type: 'ACTIVE_NAV', payload: '' });
+              }}
+            >
+              Login
+            </Button>
+          </Link>
+          <Link to="/signup">
+            <Button
+              primary
+              large
+              onClick={() => {
+                dispatch({ type: 'ACTIVE_NAV', payload: '' });
+              }}
+            >
+              Sign Up
+            </Button>
+          </Link>
         </AuthButtons>
       )}
     </Nav>

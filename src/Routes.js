@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import Favorites from './components/Favorites';
 import Discover from './components/Discover';
+import PlayBar from './components/PlayBar';
 import App from './App';
 
 import AppliedRoute from './routes/AppliedRoute';
@@ -36,6 +37,12 @@ export default function Routes({ appProps }) {
         path="/favorites"
         exact
         component={Favorites}
+        appProps={appProps}
+      />
+      <AppliedRoute
+        path="/playbar"
+        exact
+        component={PlayBar}
         appProps={appProps}
       />
       <AppliedRoute exact path="/nav" component={App} appProps={appProps} />
