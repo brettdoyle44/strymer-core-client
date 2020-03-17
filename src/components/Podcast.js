@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { Context } from '../context/store';
 import { API, Auth } from 'aws-amplify';
 import {
   Layout,
@@ -23,6 +24,7 @@ import { FaPlayCircle } from 'react-icons/fa';
 export default function Podcast(props) {
   const [podcast, setPodcast] = useState({});
   const [podcastId, setPodcastId] = useState('');
+  const { store, dispatch } = useContext(Context);
 
   useEffect(() => {
     function loadEvent() {
@@ -69,7 +71,7 @@ export default function Podcast(props) {
               <Header>{podcast.title}</Header>
               <Author>{podcast.author}</Author>
               <TextBlock>{podcast.description}</TextBlock>
-              {props.isAuthenticated && (
+              {store.hasAuthenticated && (
                 <Button
                   style={{ gridArea: 'btn', minWidth: '200px' }}
                   onClick={handleSubmit}
@@ -95,7 +97,15 @@ export default function Podcast(props) {
                 </EpDate>
               </EpText>
               <PlayWrap>
-                <FaPlayCircle />
+                <FaPlayCircle
+                  onClick={() => {
+                    dispatch({
+                      type: 'AUDIO_URL',
+                      payload: podcast.episodes[0].audioUrl
+                    });
+                    console.log(store.audioUrl);
+                  }}
+                />
               </PlayWrap>
             </Episodes>
             <Episodes>

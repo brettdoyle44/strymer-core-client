@@ -11,21 +11,19 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case 'PLAY_URL':
-      return { isPlaying: true };
-    case 'SET_AUDIO_URL':
-      return { audioUrl: action.payload };
+      return { ...state, isPlaying: true };
     case 'AUDIO_URL':
-      return { audioUrl: action.payload };
+      return { ...state, audioUrl: action.payload };
     case 'PAUSE_URL':
       return initialState.isPlaying;
     case 'USER_HAS_AUTH':
-      return { hasAuthenticated: true };
+      return { ...state, hasAuthenticated: true };
     case 'USER_IS_AUTH':
-      return { isAuthenticating: false };
+      return { ...state, isAuthenticating: false };
     case 'USER_LOGOUT':
-      return { hasAuthenticated: false };
+      return { ...state, hasAuthenticated: false };
     case 'ACTIVE_NAV':
-      return { active: action.payload };
+      return { ...state, active: action.payload };
     default:
       throw new Error();
   }

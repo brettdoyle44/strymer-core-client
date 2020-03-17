@@ -14,6 +14,7 @@ import {
   FeatureLayout
 } from '../styles/podcastGrid';
 import { API, Auth } from 'aws-amplify';
+import { DateUtils } from '@aws-amplify/core';
 
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, SearchBox, connectHits } from 'react-instantsearch-dom';
@@ -41,7 +42,10 @@ export default function PodcastGrid(props) {
   useEffect(() => {
     async function onLoad() {
       try {
-        await Auth.currentCredentials();
+        const cred = await Auth.currentCredentials();
+        DateUtils.setClockOffset(
+          cred['cognito']['config']['systemClockOffset']
+        );
         const featuredPodcasts = await loadFeatured();
         const topPodcasts = await loadTop();
         setFeatured(featuredPodcasts);

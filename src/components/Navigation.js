@@ -6,6 +6,7 @@ import styled, { css } from 'styled-components';
 import logo from '../images/Strymer-Final-Logo.png';
 import { Button } from '../styles/coreStyles';
 import { TiHome, TiCog, TiHeart, TiCompass } from 'react-icons/ti';
+import { withRouter } from 'react-router-dom';
 
 const Nav = styled.nav`
   display: flex;
@@ -129,7 +130,10 @@ const Navigation = props => {
               }}
               activestyle={store.active === 'favorites'}
             >
-              <GenLink to="/" activestyle={store.active === 'favorites'}>
+              <GenLink
+                to="/favorites"
+                activestyle={store.active === 'favorites'}
+              >
                 <TiHeart
                   style={{
                     fontSize: '1.25em',
@@ -194,4 +198,4 @@ const Navigation = props => {
   );
 };
 
-export default Navigation;
+export default withRouter(Navigation);

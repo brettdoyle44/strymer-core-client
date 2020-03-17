@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Context } from '../context/store';
 import { Form, Button } from 'react-bootstrap';
 import { useFormFields } from '../libs/hookslib';
 import styled from 'styled-components';
@@ -20,8 +21,10 @@ export default function Signup(props) {
     confirmPassword: '',
     confirmationCode: ''
   });
+
   const [newUser, setNewUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { store, dispatch } = useContext(Context);
 
   function validateForm() {
     return (
@@ -62,8 +65,9 @@ export default function Signup(props) {
       await Auth.confirmSignUp(fields.email, fields.confirmationCode);
       await Auth.signIn(fields.email, fields.password);
 
-      props.userHasAuthenticated(true);
-      props.setActive('home');
+      dispatch({ type: 'USER_HAS_AUTH' });
+      dispatch({ type: 'ACTIVE_NAV', payload: 'home' });
+      console.log(store.active);
       props.history.push('/');
     } catch (e) {
       alert(e.message);

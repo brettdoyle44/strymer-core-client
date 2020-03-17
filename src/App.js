@@ -15,14 +15,11 @@ import Routes from './Routes';
 const Layout = styled.div`
   display: grid;
   grid-template-columns: 15em 1fr;
-  min-height: 100vh;
+  height: 100vh;
+  grid-template-areas: 'nav main';
 `;
 
 function App(props) {
-  // const [isAuthenticating, setIsAuthenticating] = useState(true);
-  // const [isAuthenticated, userHasAuthenticated] = useState(false);
-  // const [active, setActive] = useState('home');
-
   const [store, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -32,7 +29,6 @@ function App(props) {
   async function onLoad() {
     try {
       await Auth.currentSession();
-      // userHasAuthenticated(true)
       dispatch({ type: 'USER_HAS_AUTH' });
       dispatch({ type: 'ACTIVE_NAV', payload: 'home' });
     } catch (e) {
@@ -41,15 +37,16 @@ function App(props) {
       }
     }
 
-    // setIsAuthenticating(false)
     dispatch({ type: 'USER_IS_AUTH' });
   }
   return (
     <React.Fragment>
       <Context.Provider value={{ store, dispatch }}>
         <Layout>
-          <Navigation />
-          <Routes />
+          <Navigation style={{ gridArea: 'nav' }} />
+          <Routes
+            style={{ gridArea: 'main', overflowY: 'auto', overflowX: 'hidden' }}
+          />
           <GlobalStyle />
         </Layout>
       </Context.Provider>

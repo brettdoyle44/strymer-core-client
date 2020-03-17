@@ -32,7 +32,6 @@ const searchClient = algoliasearch(search.APP_ID, search.SEARCH_ID);
 
 export default function PodcastGrid(props) {
   const [podcasts, setPodcasts] = useState([]);
-  // const [isAuthenticated, userHasAuthenticated] = useState(false);
   const [search, setSearch] = useState('');
   const [isLoading, setLoading] = useState(false);
 

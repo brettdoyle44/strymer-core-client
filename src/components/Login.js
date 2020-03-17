@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Context } from '../context/store';
 import styled from 'styled-components';
 import { Button, Form } from 'react-bootstrap';
 import { Auth } from 'aws-amplify';
@@ -19,6 +20,7 @@ export default function Login(props) {
     email: '',
     password: ''
   });
+  const { store, dispatch } = useContext(Context);
 
   function validateForm() {
     return fields.email.length > 0 && fields.password.length > 0;
@@ -28,8 +30,9 @@ export default function Login(props) {
 
     try {
       await Auth.signIn(fields.email, fields.password);
-      props.userHasAuthenticated(true);
-      props.setActive('home');
+      dispatch({ type: 'USER_HAS_AUTH' });
+      dispatch({ type: 'ACTIVE_NAV', payload: 'home' });
+      console.log(store.active);
       props.history.push('/');
     } catch (e) {
       alert(e.message);
