@@ -8,6 +8,7 @@ import Favorites from './components/Favorites';
 import Discover from './components/Discover';
 import PlayBar from './components/PlayBar';
 import App from './App';
+import Layout from './components/LayoutTest';
 
 import AppliedRoute from './routes/AppliedRoute';
 
@@ -47,6 +48,12 @@ export default function Routes({ appProps }) {
       />
       <AppliedRoute exact path="/nav" component={App} appProps={appProps} />
       <AppliedRoute exact path="/login" component={Login} appProps={appProps} />
+      <AppliedRoute
+        exact
+        path="/layout"
+        component={Layout}
+        appProps={appProps}
+      />
       <Route component={App} />
     </Switch>
   );

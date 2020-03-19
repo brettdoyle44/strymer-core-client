@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
-export const Layout = styled.div`
-  padding: 2em;
+export const Layout = styled.main`
+  grid-area: main;
+  margin-top: 3em;
 `;
 
 export const LoadingLayout = styled.div`
@@ -10,35 +11,25 @@ export const LoadingLayout = styled.div`
   justify-content: center;
 `;
 
-export const Search = styled.input`
-  width: 100%;
-  border-radius: 25px;
-  border: 2px solid #d1d8e0;
-  padding: 0.5em 1.5em;
-  background-color: #fff;
-  &:focus {
-    outline: none;
-    border: 2px solid #ef1860;
-  }
-`;
-
 export const FeatureHeader = styled.h1`
   font-weight: 900;
   color: #ef1860;
   text-align: left;
-  padding: 0.5em 0px 0.75em 0.25em;
+  padding: 0.5em 0px 0.75em 1em;
 `;
 
 export const InnerLayout = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  grid-gap: 1em;
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+  grid-gap: 1.5em;
+  margin: 1.5em 2.5em;
 `;
 
 export const FeatureLayout = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 1em;
+  margin: 1.5em 2.5em;
 `;
 
 export const Card = styled.div`
@@ -70,12 +61,13 @@ export const Author = styled.p`
 export const ImageWrap = styled.div`
   line-height: 0;
   overflow: hidden;
+  border-radius: 25px;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
 `;
 
 export const Image = styled.img`
   width: 100%;
   height: auto;
-  border-radius: 25px;
   &:hover {
     opacity: 0.9;
     cursor: pointer;

@@ -3,13 +3,15 @@ import styled, { css, createGlobalStyle } from 'styled-components';
 export const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900&display=swap');
   body {
-    background-color: #ecf0f3;
+    background-color: #fff;
     color: #242E42;
     font-family: 'Roboto', sans-serif;
     text-align: center;
     font-weight: 400;
   }
 `;
+
+// #ecf0f3
 
 export const Button = styled.button`
   display: inline-block;

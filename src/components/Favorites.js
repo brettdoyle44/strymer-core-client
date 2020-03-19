@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Layout,
-  Search,
   FeatureHeader,
   InnerLayout,
   Card,
@@ -48,7 +47,6 @@ export default function Favorites(props) {
         </>
       ) : (
         <Layout>
-          <Search placeholder="Search for podcasts here..." />
           {podcasts.length !== 0 ? (
             <>
               <FeatureHeader>Favorites</FeatureHeader>

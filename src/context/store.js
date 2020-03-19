@@ -5,7 +5,8 @@ const initialState = {
   isPlaying: false,
   isAuthenticating: true,
   hasAuthenticated: false,
-  active: ''
+  active: '',
+  activeNav: false
 };
 
 const reducer = (state, action) => {
@@ -24,6 +25,8 @@ const reducer = (state, action) => {
       return { ...state, hasAuthenticated: false };
     case 'ACTIVE_NAV':
       return { ...state, active: action.payload };
+    case 'SLIDE_NAV':
+      return { ...state, activeNav: action.payload };
     default:
       throw new Error();
   }
