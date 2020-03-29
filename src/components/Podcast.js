@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Context } from '../context/store';
 import { API, Auth } from 'aws-amplify';
 import {
+  LayoutWrapper,
   Layout,
   PodcastArea,
   Image,
@@ -62,9 +63,9 @@ export default function Podcast(props) {
   }
 
   return (
-    <div>
+    <>
       {podcast.episodes && (
-        <div>
+        <LayoutWrapper>
           <Layout>
             <PodcastArea>
               <Image src={podcast.image} alt={podcast.title} />
@@ -125,8 +126,8 @@ export default function Podcast(props) {
               </PlayWrap>
             </Episodes>
           </Layout>
-        </div>
+        </LayoutWrapper>
       )}
-    </div>
+    </>
   );
 }
