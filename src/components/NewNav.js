@@ -160,46 +160,48 @@ export default function LayoutTest() {
               </GenLink>
             </TheLink>
           </NavLinks>
-          <NavLinks>
-            <PodcastHeader>Profile</PodcastHeader>
-            <TheLink
-              onClick={() => {
-                dispatch({ type: 'ACTIVE_NAV', payload: 'favorites' });
-              }}
-              activestyle={store.active === 'favorites'}
-            >
-              <GenLink
-                to="/favorites"
+          {store.hasAuthenticated && (
+            <NavLinks>
+              <PodcastHeader>Profile</PodcastHeader>
+              <TheLink
+                onClick={() => {
+                  dispatch({ type: 'ACTIVE_NAV', payload: 'favorites' });
+                }}
                 activestyle={store.active === 'favorites'}
               >
-                <TiHeart
-                  style={{
-                    fontSize: '1.25em',
-                    position: 'relative',
-                    top: '3.5px'
-                  }}
-                />{' '}
-                Favorites
-              </GenLink>
-            </TheLink>
-            <TheLink
-              onClick={() => {
-                dispatch({ type: 'ACTIVE_NAV', payload: 'settings' });
-              }}
-              activestyle={store.active === 'settings'}
-            >
-              <GenLink to="/" activestyle={store.active === 'settings'}>
-                <TiCog
-                  style={{
-                    fontSize: '1.25em',
-                    position: 'relative',
-                    top: '3.5px'
-                  }}
-                />{' '}
-                Settings
-              </GenLink>
-            </TheLink>
-          </NavLinks>
+                <GenLink
+                  to="/favorites"
+                  activestyle={store.active === 'favorites'}
+                >
+                  <TiHeart
+                    style={{
+                      fontSize: '1.25em',
+                      position: 'relative',
+                      top: '3.5px'
+                    }}
+                  />{' '}
+                  Favorites
+                </GenLink>
+              </TheLink>
+              <TheLink
+                onClick={() => {
+                  dispatch({ type: 'ACTIVE_NAV', payload: 'settings' });
+                }}
+                activestyle={store.active === 'settings'}
+              >
+                <GenLink to="/" activestyle={store.active === 'settings'}>
+                  <TiCog
+                    style={{
+                      fontSize: '1.25em',
+                      position: 'relative',
+                      top: '3.5px'
+                    }}
+                  />{' '}
+                  Settings
+                </GenLink>
+              </TheLink>
+            </NavLinks>
+          )}
         </NavLinkContainer>
       </SideNav>
     </>

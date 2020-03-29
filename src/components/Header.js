@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
+import { Context } from '../context/store';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, SearchBox, connectHits } from 'react-instantsearch-dom';
 import { search } from '../config';
 import '../styles/searchOverwrite.css';
+
+// import { Button } from '../styles/coreStyles';
 
 import {
   HitsLayout,
@@ -37,8 +39,17 @@ const MemberButtons = styled.div`
   padding-left: 2em;
 `;
 
+const LoginButton = styled.button`
+  background: none;
+  border: none;
+  &:hover {
+    opacity: 0.5;
+  }
+`;
+
 export default function PodcastGrid(props) {
   const [search, setSearch] = useState('');
+  const { dispatch } = useContext(Context);
 
   const Hits = ({ hits }) => (
     <HitsLayout>
@@ -58,6 +69,24 @@ export default function PodcastGrid(props) {
     </HitsLayout>
   );
 
+  async function Login() {
+    try {
+      dispatch({ type: 'SHOW_MODAL', payload: true });
+      dispatch({ type: 'SIGN_IN', payload: true });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async function Signup() {
+    try {
+      dispatch({ type: 'SHOW_MODAL', payload: true });
+      dispatch({ type: 'SIGN_IN', payload: false });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   const CustomHits = connectHits(Hits);
 
   return (
@@ -73,8 +102,8 @@ export default function PodcastGrid(props) {
           </InstantSearch>
         </SearchContainer>
         <MemberButtons>
-          <button>Login</button>
-          <button>Signup</button>
+          <LoginButton onClick={Login}>Login</LoginButton>
+          <LoginButton onClick={Signup}>Signup</LoginButton>
         </MemberButtons>
       </Layout>
     </React.Fragment>

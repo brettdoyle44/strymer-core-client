@@ -10,7 +10,7 @@ import {
   TitleBlock,
   Title,
   Author,
-  LoadingLayout
+  SpinnerLayout
 } from '../styles/podcastGrid';
 import { API, Auth } from 'aws-amplify';
 import Spinner from 'react-spinkit';
@@ -40,14 +40,14 @@ export default function PodcastGrid(props) {
   return (
     <React.Fragment>
       {!isLoading ? (
-        <>
-          <LoadingLayout>
+        <Layout>
+          <SpinnerLayout>
             <Spinner
               name="pacman"
               style={{ fontSize: '15em', color: '#ef1860' }}
             />
-          </LoadingLayout>
-        </>
+          </SpinnerLayout>
+        </Layout>
       ) : (
         <Layout>
           <FeatureHeader>Browse</FeatureHeader>

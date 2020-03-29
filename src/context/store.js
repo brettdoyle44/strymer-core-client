@@ -6,7 +6,9 @@ const initialState = {
   isAuthenticating: true,
   hasAuthenticated: false,
   active: '',
-  activeNav: false
+  activeNav: false,
+  showModal: false,
+  signIn: false
 };
 
 const reducer = (state, action) => {
@@ -27,6 +29,10 @@ const reducer = (state, action) => {
       return { ...state, active: action.payload };
     case 'SLIDE_NAV':
       return { ...state, activeNav: action.payload };
+    case 'SHOW_MODAL':
+      return { ...state, showModal: action.payload };
+    case 'SIGN_IN':
+      return { ...state, signIn: action.payload };
     default:
       throw new Error();
   }

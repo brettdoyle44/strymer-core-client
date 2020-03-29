@@ -2,8 +2,6 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Podcast from './components/Podcast';
 import Home from './components/Home.js';
-import Login from './components/Login';
-import Signup from './components/Signup';
 import Favorites from './components/Favorites';
 import Discover from './components/Discover';
 import PlayBar from './components/PlayBar';
@@ -29,12 +27,6 @@ export default function Routes({ appProps }) {
         appProps={appProps}
       />
       <AppliedRoute
-        path="/signup"
-        exact
-        component={Signup}
-        appProps={appProps}
-      />
-      <AppliedRoute
         path="/favorites"
         exact
         component={Favorites}
@@ -47,7 +39,6 @@ export default function Routes({ appProps }) {
         appProps={appProps}
       />
       <AppliedRoute exact path="/nav" component={App} appProps={appProps} />
-      <AppliedRoute exact path="/login" component={Login} appProps={appProps} />
       <AppliedRoute
         exact
         path="/layout"

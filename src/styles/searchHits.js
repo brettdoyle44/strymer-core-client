@@ -10,7 +10,7 @@ export const HitsLayout = styled.div`
   grid-gap: 1em;
   padding: 1em 0em;
   align-items: start;
-  z-index: 999;
+  z-index: 995;
 `;
 
 export const HitsImage = styled.img`

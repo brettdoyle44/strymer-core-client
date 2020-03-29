@@ -73,3 +73,10 @@ export const Image = styled.img`
     cursor: pointer;
   }
 `;
+
+export const SpinnerLayout = styled.div`
+  display: flex;
+  min-height: 100%;
+  align-items: center;
+  justify-content: center;
+`;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Layout,
@@ -10,27 +10,26 @@ import {
   TitleBlock,
   Title,
   Author,
-  LoadingLayout,
+  SpinnerLayout,
   FeatureLayout
 } from '../styles/podcastGrid';
 import { API, Auth } from 'aws-amplify';
-import { DateUtils } from '@aws-amplify/core';
+import { Context } from '../context/store';
 
 import Spinner from 'react-spinkit';
 
 export default function PodcastGrid(props) {
   const [featured, setFeatured] = useState([]);
   const [top, setTop] = useState([]);
+  const { dispatch } = useContext(Context);
   // const [isAuthenticated, userHasAuthenticated] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     async function onLoad() {
+      dispatch({ type: 'ACTIVE_NAV', payload: 'home' });
       try {
-        const cred = await Auth.currentCredentials();
-        DateUtils.setClockOffset(
-          cred['cognito']['config']['systemClockOffset']
-        );
+        await Auth.currentCredentials();
         const featuredPodcasts = await loadFeatured();
         const topPodcasts = await loadTop();
         setFeatured(featuredPodcasts);
@@ -41,7 +40,7 @@ export default function PodcastGrid(props) {
       }
     }
     onLoad();
-  }, []);
+  }, [dispatch]);
 
   function loadFeatured() {
     return API.get('podcasts', '/featured');
@@ -54,14 +53,14 @@ export default function PodcastGrid(props) {
   return (
     <React.Fragment>
       {!isLoading ? (
-        <>
-          <LoadingLayout>
+        <Layout>
+          <SpinnerLayout>
             <Spinner
               name="pacman"
               style={{ fontSize: '15em', color: '#ef1860' }}
             />
-          </LoadingLayout>
-        </>
+          </SpinnerLayout>
+        </Layout>
       ) : (
         <Layout>
           <FeatureHeader>Featured</FeatureHeader>

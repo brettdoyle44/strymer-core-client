@@ -4,14 +4,29 @@ import { Form, Button } from 'react-bootstrap';
 import { useFormFields } from '../libs/hookslib';
 import styled from 'styled-components';
 import { Auth } from 'aws-amplify';
+import { Link } from 'react-router-dom';
 
-const SignupDiv = styled.div`
-  padding: 60px 0;
+const SignupWrapper = styled.div`
+  grid-area: bottom;
+  padding: 60px;
 `;
 
 const SignupForm = styled.form`
   margin: 0 auto;
-  max-width: 320px;
+  min-width: 25vw;
+`;
+
+const SignupLayout = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    'top'
+    'bottom';
+`;
+
+const TopSide = styled.div`
+  grid-area: top;
 `;
 
 export default function Signup(props) {
@@ -77,76 +92,116 @@ export default function Signup(props) {
 
   function renderConfirmationForm() {
     return (
-      <SignupForm onSubmit={handleConfirmationSubmit}>
-        <Form.Group controlId="confirmationCode">
-          <Form.Label>Confirmation Code</Form.Label>
-          <Form.Control
-            autoFocus
-            type="tel"
-            onChange={handleFieldChange}
-            value={fields.confirmationCode}
-          />
-          <Form.Text
-            style={{ fontSize: '14px', paddingBottom: '10px', color: '#999' }}
-          >
-            Please check your email for the code.
-          </Form.Text>
-        </Form.Group>
-        <Button
-          block
-          type="submit"
-          isLoading={isLoading}
-          disabled={!validateConfirmationForm()}
-        >
-          Verify
-        </Button>
-      </SignupForm>
+      <SignupLayout>
+        <TopSide>
+          <h1>Confirm Email</h1>
+        </TopSide>
+        <SignupWrapper>
+          <SignupForm onSubmit={handleConfirmationSubmit}>
+            <Form.Group controlId="confirmationCode">
+              <Form.Control
+                autoFocus
+                type="tel"
+                onChange={handleFieldChange}
+                placeholder="Confirmation Code"
+                value={fields.confirmationCode}
+                style={{ borderRadius: '50px', padding: '1.5em' }}
+              />
+              <Form.Text
+                style={{
+                  fontSize: '14px',
+                  paddingBottom: '10px',
+                  color: '#999'
+                }}
+              >
+                Please check your email for the code.
+              </Form.Text>
+            </Form.Group>
+            <Button
+              style={{
+                borderRadius: '50px',
+                padding: '0.75em',
+                backgroundColor: '#ec1966',
+                border: '1px solid #ec1966'
+              }}
+              block
+              type="submit"
+              isLoading={isLoading}
+              disabled={!validateConfirmationForm()}
+            >
+              Verify
+            </Button>
+          </SignupForm>
+        </SignupWrapper>
+      </SignupLayout>
     );
   }
 
   function renderForm() {
     return (
-      <SignupForm onSubmit={handleSubmit}>
-        <Form.Group controlId="email">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            autoFocus
-            type="email"
-            value={fields.email}
-            onChange={handleFieldChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={fields.password}
-            onChange={handleFieldChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="confirmPassword">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            type="password"
-            onChange={handleFieldChange}
-            value={fields.confirmPassword}
-          />
-        </Form.Group>
-        <Button
-          block
-          type="submit"
-          isLoading={isLoading}
-          disabled={!validateForm()}
-        >
-          Signup
-        </Button>
-      </SignupForm>
+      <SignupLayout>
+        <TopSide>
+          <h1>Sign up</h1>
+          <p>
+            Already have an account?{' '}
+            <Link
+              to="/"
+              onClick={() => dispatch({ type: 'SIGN_IN', payload: true })}
+            >
+              Sign in
+            </Link>
+            .
+          </p>
+        </TopSide>
+        <SignupWrapper>
+          <SignupForm onSubmit={handleSubmit}>
+            <Form.Group controlId="email">
+              <Form.Control
+                autoFocus
+                type="email"
+                value={fields.email}
+                onChange={handleFieldChange}
+                placeholder="Email"
+                style={{ borderRadius: '50px', padding: '1.5em' }}
+              />
+            </Form.Group>
+            <Form.Group controlId="password">
+              <Form.Control
+                type="password"
+                value={fields.password}
+                onChange={handleFieldChange}
+                placeholder="Password"
+                style={{ borderRadius: '50px', padding: '1.5em' }}
+              />
+            </Form.Group>
+            <Form.Group controlId="confirmPassword">
+              <Form.Control
+                type="password"
+                onChange={handleFieldChange}
+                value={fields.confirmPassword}
+                placeholder="Confirm Password"
+                style={{ borderRadius: '50px', padding: '1.5em' }}
+              />
+            </Form.Group>
+            <Button
+              style={{
+                borderRadius: '50px',
+                padding: '0.75em',
+                backgroundColor: '#ec1966',
+                border: '1px solid #ec1966'
+              }}
+              block
+              type="submit"
+              isLoading={isLoading}
+              disabled={!validateForm()}
+            >
+              Signup
+            </Button>
+          </SignupForm>
+        </SignupWrapper>
+      </SignupLayout>
     );
   }
 
-  return (
-    <SignupDiv>
-      {newUser === null ? renderForm() : renderConfirmationForm()}
-    </SignupDiv>
-  );
+  return <>{newUser === null ? renderForm() : renderConfirmationForm()}</>;
 }

@@ -4,14 +4,29 @@ import styled from 'styled-components';
 import { Button, Form } from 'react-bootstrap';
 import { Auth } from 'aws-amplify';
 import { useFormFields } from '../libs/hookslib';
+import { Link } from 'react-router-dom';
 
 const LoginWrapper = styled.div`
-  padding: 60px 0;
+  grid-area: bottom;
+  padding: 60px;
 `;
 
 const LoginForm = styled.form`
   margin: 0 auto;
-  max-width: 500px;
+  min-width: 25vw;
+`;
+
+const LoginLayout = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    'top'
+    'bottom';
+`;
+
+const TopSide = styled.div`
+  grid-area: top;
 `;
 
 export default function Login(props) {
@@ -40,29 +55,56 @@ export default function Login(props) {
   }
 
   return (
-    <LoginWrapper>
-      <LoginForm onSubmit={handleSubmit}>
-        <Form.Group controlId="email">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            autoFocus
-            type="email"
-            value={fields.email}
-            onChange={handleFieldChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            value={fields.password}
-            onChange={handleFieldChange}
-            type="password"
-          />
-        </Form.Group>
-        <Button block disabled={!validateForm()} type="submit">
-          Login
-        </Button>
-      </LoginForm>
-    </LoginWrapper>
+    <LoginLayout>
+      <TopSide>
+        <h1>Sign in</h1>
+        <p>
+          Don't have an account?{' '}
+          <Link
+            to="/"
+            onClick={() => dispatch({ type: 'SIGN_IN', payload: false })}
+          >
+            Sign up
+          </Link>
+          .
+        </p>
+      </TopSide>
+      <LoginWrapper>
+        <LoginForm onSubmit={handleSubmit}>
+          <Form.Group controlId="email">
+            <Form.Control
+              autoFocus
+              type="email"
+              value={fields.email}
+              onChange={handleFieldChange}
+              placeholder="Email"
+              style={{ borderRadius: '50px', padding: '1.5em' }}
+            />
+          </Form.Group>
+          <Form.Group controlId="password">
+            <Form.Control
+              value={fields.password}
+              onChange={handleFieldChange}
+              type="password"
+              placeholder="Password"
+              style={{ borderRadius: '50px', padding: '1.5em' }}
+            />
+          </Form.Group>
+          <Button
+            style={{
+              borderRadius: '50px',
+              padding: '0.75em',
+              backgroundColor: '#ec1966',
+              border: '1px solid #ec1966'
+            }}
+            block
+            disabled={!validateForm()}
+            type="submit"
+          >
+            Login
+          </Button>
+        </LoginForm>
+      </LoginWrapper>
+    </LoginLayout>
   );
 }
